@@ -19,7 +19,7 @@ const WIDGETS: WidgetType[] = [
   {
     title: 'Inheritance',
     widget: Inheritance,
-    description: 'Connected account details',
+    description: '',
     reference: 'https://docs.multiversx.com/sdk-and-tools/sdk-dapp/#account'
   },
   {

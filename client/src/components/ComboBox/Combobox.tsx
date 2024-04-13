@@ -12,7 +12,7 @@ interface ComboBoxProps {
 const customStyles = {
   input: (provided: any) => ({
     ...provided,
-    minHeight: '65px', // Adjust height as needed
+    height: '30px', // Adjust height as needed
     minWidth: '100px'
   }),
   menu: (provided: any) => ({
