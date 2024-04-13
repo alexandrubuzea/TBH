@@ -1,0 +1,1 @@
+/Users/ioanpersonal/facultate/TBH/smart_contracts/will/target/debug/will-meta: /Users/ioanpersonal/facultate/TBH/smart_contracts/will/meta/src/main.rs /Users/ioanpersonal/facultate/TBH/smart_contracts/will/src/will.rs

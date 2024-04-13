@@ -1,0 +1,1 @@
+/Users/ioanpersonal/facultate/TBH/smart_contracts/will/target/wasm32-unknown-unknown/release/will_wasm.wasm: /Users/ioanpersonal/facultate/TBH/smart_contracts/will/src/will.rs /Users/ioanpersonal/facultate/TBH/smart_contracts/will/wasm/src/lib.rs
