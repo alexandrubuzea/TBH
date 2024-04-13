@@ -72,7 +72,8 @@ const AppContent = () => {
   );
 };
 
-export const App = () => {
+export const App = () =>
+{
   return (
     <AxiosInterceptorContext.Provider>
       <AxiosInterceptorContext.Interceptor
