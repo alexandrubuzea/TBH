@@ -1,51 +1,89 @@
-import { HelloWorldClass } from "@genezio-sdk/genezio-project";
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-export default function App() {
-  const [name, setName] = useState("");
-  const [response, setResponse] = useState("");
+import {
+  AxiosInterceptorContext, // using this is optional
+  DappProvider,
+  Layout,
+  TransactionsToastList,
+  NotificationModal,
+  SignTransactionsModals
+  // uncomment this to use the custom transaction tracker
+  // TransactionsTracker
+} from 'components';
 
- 
-  async function sayHello() {
-  const res = await HelloWorldClass.hello(name);
-    setResponse(res);
-  }
+import {
+  apiTimeout,
+  walletConnectV2ProjectId,
+  environment,
+  sampleAuthenticatedDomains
+} from 'config';
+import { RouteNamesEnum } from 'localConstants';
+import { PageNotFound, Unlock } from 'pages';
+import { routes } from 'routes';
+import { BatchTransactionsContextProvider } from 'wrappers';
 
+const AppContent = () => {
   return (
-    <>
-      <div>
-        <a href="https://genezio.com" target="_blank">
-          <img
-            src="https://raw.githubusercontent.com/Genez-io/graphics/main/svg/Logo_Genezio_White.svg"
-            className="logo genezio light"
-            alt="Genezio Logo"
-          />
-          <img
-            src="https://raw.githubusercontent.com/Genez-io/graphics/main/svg/Logo_Genezio_Black.svg"
-            className="logo genezio dark"
-            alt="Genezio Logo"
-          />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Genezio + React = ❤️</h1>
-      <div className="card">
-        <input
-          type="text"
-          className="input-box"
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter your name"
-        />
-        <br />
-        <br />
-
-        <button onClick={() => sayHello()}>Say Hello</button>
-        <p className="read-the-docs">{response}</p>
-      </div>
-    </>
+    <DappProvider
+      environment={environment}
+      customNetworkConfig={{
+        name: 'customConfig',
+        apiTimeout,
+        walletConnectV2ProjectId
+      }}
+      dappConfig={{
+        shouldUseWebViewProvider: true,
+        logoutRoute: RouteNamesEnum.unlock
+      }}
+      customComponents={{
+        transactionTracker: {
+          // uncomment this to use the custom transaction tracker
+          // component: TransactionsTracker,
+          props: {
+            onSuccess: (sessionId: string) => {
+              console.log(`Session ${sessionId} successfully completed`);
+            },
+            onFail: (sessionId: string, errorMessage: string) => {
+              console.log(`Session ${sessionId} failed. ${errorMessage ?? ''}`);
+            }
+          }
+        }
+      }}
+    >
+      <AxiosInterceptorContext.Listener>
+        <Layout>
+          <TransactionsToastList />
+          <NotificationModal />
+          <SignTransactionsModals />
+          <Routes>
+            <Route path={RouteNamesEnum.unlock} element={<Unlock />} />
+            {routes.map((route) => (
+              <Route
+                path={route.path}
+                key={`route-key-'${route.path}`}
+                element={<route.component />}
+              />
+            ))}
+            <Route path='*' element={<PageNotFound />} />
+          </Routes>
+        </Layout>
+      </AxiosInterceptorContext.Listener>
+    </DappProvider>
   );
-}
+};
+
+export const App = () => {
+  return (
+    <AxiosInterceptorContext.Provider>
+      <AxiosInterceptorContext.Interceptor
+        authenticatedDomains={sampleAuthenticatedDomains}
+      >
+        <Router>
+          <BatchTransactionsContextProvider>
+            <AppContent />
+          </BatchTransactionsContextProvider>
+        </Router>
+      </AxiosInterceptorContext.Interceptor>
+    </AxiosInterceptorContext.Provider>
+  );
+};
