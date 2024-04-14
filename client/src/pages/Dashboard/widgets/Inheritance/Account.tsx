@@ -16,8 +16,12 @@ import {
 } from 'types/pingPong.types';
 import { Address } from 'utils/sdkDappCore';
 import { signAndSendTransactions } from 'helpers/signAndSendTransactions';
+<<<<<<< Updated upstream
 // import DatePicker from './components/DatePicker';
 // import { TokenTransfer } from 'utils/sdkDappCore';
+=======
+import { TokenTransfer } from 'utils/sdkDappCore';
+>>>>>>> Stashed changes
 
 
 interface Option {
@@ -94,7 +98,7 @@ export const Inheritance = () => {
 		async ({ amount, callbackRoute }: PingRawProps) => {
 
 
-      // const TokenFoo = TokenTransfer.fungibleFromAmount("FOO-6ce17b", amount, 0);
+      const TokenFoo = TokenTransfer.fungibleFromAmount("FOO-6ce17b", amount, 0);
 
       const transaction = smartContract.methodsExplicit
       .withSingleESDTTransfer()
