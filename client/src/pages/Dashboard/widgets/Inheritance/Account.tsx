@@ -17,6 +17,7 @@ import {
 import { Address } from 'utils/sdkDappCore';
 import { signAndSendTransactions } from 'helpers/signAndSendTransactions';
 // import DatePicker from './components/DatePicker';
+// import { TokenTransfer } from 'utils/sdkDappCore';
 
 
 interface Option {
@@ -92,17 +93,13 @@ export const Inheritance = () => {
   const sendPingTransactionFromAbi = useCallback(
 		async ({ amount, callbackRoute }: PingRawProps) => {
 
-    //   exec('ls', (error, stdout, stderr) => {
-    //     if (error) {
-    //         console.error(`Error executing ls: ${error.message}`);
-    //         return;
-    //     }
-    //     if (stderr) {
-    //         console.error(`ls command encountered an error: ${stderr}`);
-    //         return;
-    //     }
-    //     console.log(`ls command output:\n${stdout}`);
-    // });
+
+      // const TokenFoo = TokenTransfer.fungibleFromAmount("FOO-6ce17b", amount, 0);
+
+      const transaction = smartContract.methodsExplicit
+      .withSingleESDTTransfer()
+      .withSender(new Address(address))
+
 
 		  // clearAllTransactions();
 	
