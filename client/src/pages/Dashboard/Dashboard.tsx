@@ -1,5 +1,6 @@
 import { contractAddress } from 'config';
 import { AuthRedirectWrapper } from 'wrappers';
+import { useEffect, useState } from 'react';
 import {
   Account,
   Inheritance,
@@ -71,9 +72,15 @@ const WIDGETS: WidgetType[] = [
 
 export const Dashboard = () => {
   useScrollToElement();
-
   const { address } = useGetAccountInfo();
-  const widgets = WIDGETS;
+  const [isInheritor, setIsInheritor] = useState(false);
+  const [widgets, setWidgets] = useState(WIDGETS);
+
+  useEffect(() => {
+    ServerClass.isInheritor(address).then((value: boolean) => {setIsInheritor(value)
+      if (value) setWidgets(WIDGETS_INHERITOR)
+    })
+  }, []);
 
   return (
     <AuthRedirectWrapper>
