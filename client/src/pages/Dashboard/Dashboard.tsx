@@ -50,13 +50,13 @@ const WIDGETS: WidgetType[] = [
   {
     title: 'Claim Inheritance',
     widget: Claim,
-    description: 'Leave assets to peers',
+    description: 'Click to acquire inherited assets',
     reference: 'https://docs.multiversx.com/sdk-and-tools/sdk-dapp/#account'
   },
   {
     title: 'Pass Inheritance',
     widget: Inheritance,
-    description: '',
+    description: 'Leave assets to peers',
     reference: 'https://docs.multiversx.com/sdk-and-tools/sdk-dapp/#account'
   },
   {

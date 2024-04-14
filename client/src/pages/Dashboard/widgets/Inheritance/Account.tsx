@@ -9,13 +9,32 @@ import { useState, useCallback, useEffect} from 'react';
 import { Spinner } from './components/Spinner';
 import { getChainId } from 'utils/getChainId';
 import {Datepicker} from './components/DatePicker'
-import { ServerClass } from "@genezio-sdk/genezio-project"
+// import { ServerClass } from "@genezio-sdk/genezio-project"
 import {
   PingRawProps,
 } from 'types/pingPong.types';
 import { Address } from 'utils/sdkDappCore';
 import { signAndSendTransactions } from 'helpers/signAndSendTransactions';
 
+
+function combineDateTimeToUnixTimestamp(currentDate: Date): number {
+  // Parse the given time string into hours, minutes, and seconds
+  const now = new Date();
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes =  now.getMinutes().toString().padStart(2, '0');
+  const seconds =now.getSeconds().toString().padStart(2, '0');
+
+  // Create a new Date object with the given date
+  const combinedDateTime = new Date(currentDate);
+
+  // Set the time components (hours, minutes, seconds) from the current time
+  combinedDateTime.setHours(parseInt(hours));
+  combinedDateTime.setMinutes(parseInt(minutes));
+  combinedDateTime.setSeconds(parseInt(seconds));
+
+  // Get the Unix timestamp in seconds and round it down
+  return Math.floor(combinedDateTime.getTime() / 1000);
+}
 
 interface Option {
   id: number;
@@ -126,6 +145,8 @@ export const Inheritance = () => {
   const sendWillRequest = async () => {
 
     try {
+      const timestamp = combineDateTimeToUnixTimestamp(selectedDate);
+      console.log(timestamp);
 
       const r = sendPingTransactionFromAbi({amount: amountText, callbackRoute: ""});
 
