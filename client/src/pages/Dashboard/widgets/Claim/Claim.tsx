@@ -1,5 +1,7 @@
 import { Button } from 'components/Button';
 import { useState } from 'react';
+import { useGetAccountInfo } from 'hooks';
+import { ServerClass } from "@genezio-sdk/genezio-project"
 
 function getCurrentUnixTimestamp(): number {
     return Math.floor(Date.now() / 1000);
@@ -7,6 +9,8 @@ function getCurrentUnixTimestamp(): number {
 
 export const Claim = () => {
     const [done, setDone] = useState(false);
+    const { address, account } = useGetAccountInfo();
+    const contract = ServerClass.getContractAddress(address);
 
     const acquire = async () => {
         const currentUnixTimestamp = getCurrentUnixTimestamp();
