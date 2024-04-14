@@ -16,6 +16,7 @@ import {
 } from 'types/pingPong.types';
 import { Address } from 'utils/sdkDappCore';
 import { signAndSendTransactions } from 'helpers/signAndSendTransactions';
+// import DatePicker from './components/DatePicker';
 
 
 interface Option {
@@ -77,9 +78,11 @@ export const Inheritance = () => {
     })
   }, [])
 
-  
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const handleDateChange = (date: Date) => {
+    setSelectedDate(date);
+  };
   const { address, account } = useGetAccountInfo();
-
   const [inputText, setInputText] = useState('');
   const [amountText, setAmountText] = useState('');
   const [currency, setCurrency] = useState('');
@@ -167,7 +170,7 @@ export const Inheritance = () => {
           UNSAFE_className='input-box-small'
         />
     <ComboBox options={options} onChange={(selectedOption: Option) => setCurrency(selectedOption.label)} />
-    <DatePicker label="Event date" />
+    {/* <DatePicker value={selectedDate} onChange={handleDateChange} /> */}
     <div className='btn'>
     <Button
             disabled={false}
