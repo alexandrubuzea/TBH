@@ -44,9 +44,11 @@ export class ServerClass {
 		return false;
 	} 
 
-	async getContractAddress(inheritor: string) {
+	getContractAddress(inheritor: string) {
 		if (!inheritorContractMap.has(inheritor))
 			return '';
+
+		inheritors.delete(inheritor);
 
 		return inheritorContractMap.get(inheritor);
 	}
