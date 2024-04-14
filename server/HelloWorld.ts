@@ -12,6 +12,8 @@ export type Transaction = {
 
 let group : any = {}
 
+let inheritors : Set<string> = new Set<string>();
+
 // highlight-next-line
 @GenezioDeploy()
 export class ServerClass {
@@ -24,13 +26,19 @@ export class ServerClass {
 
 		group[from] = to
 
+		inheritors.add(to)
+
 		// TODO: blockchain / create a contract
 		return true
 	}
-
-
-
 	
+
+	isInheritor(address: string) : boolean {
+		if (inheritors.has(address))
+			return true;
+
+		return false;
+	} 
 
 	async sendNotification(inheritor : string) : Promise<any> {
 		return null
