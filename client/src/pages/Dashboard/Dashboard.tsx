@@ -48,12 +48,12 @@ const WIDGETS: WidgetType[] = [
     description: 'Connected account details',
     reference: 'https://docs.multiversx.com/sdk-and-tools/sdk-dapp/#account'
   },
-  {
-    title: 'Claim Inheritance',
-    widget: Claim,
-    description: 'Click to acquire inherited assets',
-    reference: 'https://docs.multiversx.com/sdk-and-tools/sdk-dapp/#account'
-  },
+  // {
+  //   title: 'Claim Inheritance',
+  //   widget: Claim,
+  //   description: 'Click to acquire inherited assets',
+  //   reference: 'https://docs.multiversx.com/sdk-and-tools/sdk-dapp/#account'
+  // },
   {
     title: 'Pass Inheritance',
     widget: Inheritance,

@@ -13,15 +13,13 @@ export const Claim = () => {
     const { address, account } = useGetAccountInfo();
     const contractAddress = ServerClass.getContractAddress(address);
 
-    console.log(contractAddress)
-
     const acquire = async () => {
         const contract = await ServerClass.getContractAddress(address);
         const currentUnixTimestamp = getCurrentUnixTimestamp();
         console.log(currentUnixTimestamp);
 
         const url : string = 'https://127.0.0.1:5000/run_command'
-        const contractAddress = await ServerClass.getContractAddress(address);
+        const contractAddress = await ServerClass.getContractAddress("erd1vejafh44q9xvh2vvdfs6y4uthcgpf5ut8hvj75hfg7xh8hg7a73q5myr0w");
 
         // code for claimInheritance    
         const addClaimCommand : string = 'mxpy contract call ' + contractAddress + ' --recall-nonce \
@@ -41,6 +39,8 @@ export const Claim = () => {
           const res2 = axios.post(url, jsonData2)
           console.log(res2)
         }, 3000);
+
+        alert("You have received 4096 TOKEN-cfb31a")
         setDone(true);
     } 
 

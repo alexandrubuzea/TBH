@@ -145,8 +145,11 @@ export const Inheritance = () => {
       setTimeout(() => {
         const res2 = axios.post(url, jsonData2)
         console.log(res2)
-      }, 3000);
+      }, 4000);
 
+      alert("The funds have been send to the smart contract")
+
+      console.log(inputText)
       const res3 = await ServerClass.postTransaction({
         from: address, to: inputText, amount: parseInt(amountText), contract: contractAddress
       });
