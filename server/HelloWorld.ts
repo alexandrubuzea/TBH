@@ -1,5 +1,6 @@
 // highlight-next-line
 import { GenezioDeploy } from "@genezio/types";
+import { SmartContract } from "./utils";
 
 // make our transaction datatype
 
@@ -14,6 +15,7 @@ let group : any = {}
 // highlight-next-line
 @GenezioDeploy()
 export class ServerClass {
+
 	async postTransaction(tr : Transaction) : Promise<boolean> {
 		const {from, to, amount} = tr;
 
@@ -25,6 +27,10 @@ export class ServerClass {
 		// TODO: blockchain / create a contract
 		return true
 	}
+
+
+
+	
 
 	async sendNotification(inheritor : string) : Promise<any> {
 		return null

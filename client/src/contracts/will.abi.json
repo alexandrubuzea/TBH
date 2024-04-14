@@ -1,0 +1,204 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.76.0-nightly",
+            "commitHash": "d86d65bbc19b928387f68427fcc3a0da498d8a19",
+            "commitDate": "2023-12-10",
+            "channel": "Nightly",
+            "short": "rustc 1.76.0-nightly (d86d65bbc 2023-12-10)"
+        },
+        "contractCrate": {
+            "name": "will",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "multiversx-sc",
+            "version": "0.48.0"
+        }
+    },
+    "name": "WillESDT",
+    "constructor": {
+        "inputs": [],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "status",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "inheritor",
+                    "type": "Address"
+                },
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Status"
+                }
+            ]
+        },
+        {
+            "name": "removeInheritor",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "inheritor",
+                    "type": "Address"
+                },
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "addInheritor",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "inheritor",
+                    "type": "Address"
+                },
+                {
+                    "name": "end_timestamp",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claimInheritance",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "addMultipleInheritors",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "inheritors",
+                    "type": "List<Address>"
+                },
+                {
+                    "name": "tokens",
+                    "type": "List<TokenIdentifier>"
+                },
+                {
+                    "name": "amounts",
+                    "type": "List<BigUint>"
+                },
+                {
+                    "name": "end_timestamps",
+                    "type": "List<u64>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeMultipleInheritors",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "inheritors",
+                    "type": "List<Address>"
+                },
+                {
+                    "name": "tokens",
+                    "type": "List<TokenIdentifier>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getPerTokenInheritance",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "inheritor",
+                    "type": "Address"
+                },
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getInheritanceMatureUNIX",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "inheritor",
+                    "type": "Address"
+                },
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getTokenSum",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        }
+    ],
+    "esdtAttributes": [],
+    "hasCallback": false,
+    "types": {
+        "Status": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "NotMature",
+                    "discriminant": 0
+                },
+                {
+                    "name": "Successful",
+                    "discriminant": 1
+                },
+                {
+                    "name": "NotInheritor",
+                    "discriminant": 2
+                }
+            ]
+        }
+    }
+}

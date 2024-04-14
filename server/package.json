@@ -9,6 +9,7 @@
     "license": "ISC",
     "dependencies": {
         "@genezio/types": "^1.0.14",
+        "@multiversx/sdk-core": "^13.0.1",
         "node-fetch": "^3.3.2"
     },
     "prettier": {

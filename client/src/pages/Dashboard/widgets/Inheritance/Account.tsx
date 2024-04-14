@@ -3,9 +3,19 @@ import { ComboBox } from './components';
 import {TextField, Flex, View } from '@adobe/react-spectrum';
 import axios, { AxiosResponse } from 'axios';
 import './inheritance.css'
+import { smartContract } from 'utils/smartContract';
 import { Button } from 'components/Button';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Spinner } from './components/Spinner';
+import { getChainId } from 'utils/getChainId';
+import { ServerClass, Transaction } from "@genezio-sdk/genezio-project"
+import {
+  PingRawProps,
+  PingPongServiceProps,
+  PongRawProps
+} from 'types/pingPong.types';
+import { Address } from 'utils/sdkDappCore';
+import { signAndSendTransactions } from 'helpers/signAndSendTransactions';
 
 interface Option {
   id: number;
@@ -19,7 +29,12 @@ interface RequestBody {
   currency: string
 }
 
-const endpoint = ""
+
+const PING_TRANSACTION_INFO = {
+  processingMessage: 'Processing Ping transaction',
+  errorMessage: 'An error has occured during Ping',
+  successMessage: 'Ping transaction successful'
+};
 
 export const Inheritance = () => {
   let options = [
@@ -37,31 +52,49 @@ export const Inheritance = () => {
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const sendWillRequest = async () => {
-    console.log(inputText);
-    console.log(amountText);
-    console.log(currency);
-    setLoading(true)
+  const sendPingTransactionFromAbi = useCallback(
+		async ({ amount, callbackRoute }: PingRawProps) => {
+		  // clearAllTransactions();
+	
+		  const pingTransaction = smartContract.methodsExplicit
+      .addInheritor()
+			.withSender(new Address(address))
+			.withValue(amount ?? '0')
+			.withGasLimit(60000000)
+			.withChainID(getChainId())
+			.buildTransaction();
+	
+		  const sessionId = await signAndSendTransactions({
+			transactions: [pingTransaction],
+			callbackRoute,
+			transactionsDisplayInfo: PING_TRANSACTION_INFO
+		  });
+	
+		  // sessionStorage.setItem(type, sessionId);
+		  // setPingPongSessionId(sessionId);
+		},
+		[]
+	);
 
-    const requestBody: RequestBody = {
-      src: address,
-      dest: inputText,
-      amount: parseInt(amountText),
-      currency: currency
-    }
+  const sendWillRequest = async () => {
 
     try {
-      // Make a POST request with the body
-      const response: AxiosResponse = await axios.post(endpoint, requestBody);
-  
-      // Handle the response
-      console.log('Response:', response.data);
+
+      const r = sendPingTransactionFromAbi({amount: amountText, callbackRoute: ""});
+
+      const tr: Transaction = {
+        from: address, to: inputText, amount: parseInt(amountText)
+      }
+      
+      // // const res = await ServerClass.postTransaction(tr);
+   
+      // console.log('Response:', res);
     } catch (error) {
       // Handle errors
       console.error('Error:', error);
     }
     // setLoading(false);
-    // setDone(true);
+    setDone(true);
   };
 
   return (
