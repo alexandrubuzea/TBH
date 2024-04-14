@@ -7,9 +7,6 @@ import axios, { AxiosResponse } from 'axios';
 import { get } from 'http';
 import { useEffect, useState } from 'react';
 
-const endpoint = "https://devnet-gateway.multiversx.com/address/erd194jfa28ulagr2nc65kv9emlay78eyhnnvs83qdxnqhvtcqrv49mqy2e45f/esdt"
-
-
 async function getAssets(account : string) {
   const url = "https://devnet-gateway.multiversx.com/address/" + account + "/esdt"
   const res = await axios.get(url)

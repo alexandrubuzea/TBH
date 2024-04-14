@@ -1,6 +1,6 @@
 import { useGetAccountInfo } from 'hooks';
 import { ComboBox } from './components';
-import {TextField, Flex, View } from '@adobe/react-spectrum';
+import {TextField, Flex, View, } from '@adobe/react-spectrum';
 import axios, { AxiosResponse } from 'axios';
 import './inheritance.css'
 import { smartContract } from 'utils/smartContract';
@@ -156,6 +156,7 @@ export const Inheritance = () => {
           UNSAFE_className='input-box-small'
         />
     <ComboBox options={options} onChange={(selectedOption: Option) => setCurrency(selectedOption.label)} />
+    <DatePicker label="Event date" />
     <div className='btn'>
     <Button
             disabled={false}
