@@ -8,9 +8,12 @@ export type Transaction = {
 	from : string;
 	to : string;
 	amount : number;
+	contract : string; 
 }
 
 let group : any = {}
+
+let inheritorContractMap : Map<string, string> = new Map<string, string>()
 
 let inheritors : Set<string> = new Set<string>();
 
@@ -19,7 +22,7 @@ let inheritors : Set<string> = new Set<string>();
 export class ServerClass {
 
 	async postTransaction(tr : Transaction) : Promise<boolean> {
-		const {from, to, amount} = tr;
+		const {from, to, amount, contract} = tr;
 
 		if (group[from] !== undefined)
 			return false
@@ -28,7 +31,8 @@ export class ServerClass {
 
 		inheritors.add(to)
 
-		// TODO: blockchain / create a contract
+		inheritorContractMap.set(to, contract);
+
 		return true
 	}
 	
@@ -39,6 +43,13 @@ export class ServerClass {
 
 		return false;
 	} 
+
+	async getContractAddress(inheritor: string) {
+		if (!inheritorContractMap.has(inheritor))
+			return '';
+
+		return inheritorContractMap.get(inheritor);
+	}
 
 	async sendNotification(inheritor : string) : Promise<any> {
 		return null
