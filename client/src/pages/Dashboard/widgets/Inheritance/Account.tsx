@@ -8,20 +8,13 @@ import { Button } from 'components/Button';
 import { useState, useCallback, useEffect} from 'react';
 import { Spinner } from './components/Spinner';
 import { getChainId } from 'utils/getChainId';
-import { ServerClass, Transaction } from "@genezio-sdk/genezio-project"
+import {Datepicker} from './components/DatePicker'
+import { ServerClass } from "@genezio-sdk/genezio-project"
 import {
   PingRawProps,
-  PingPongServiceProps,
-  PongRawProps
 } from 'types/pingPong.types';
 import { Address } from 'utils/sdkDappCore';
 import { signAndSendTransactions } from 'helpers/signAndSendTransactions';
-<<<<<<< Updated upstream
-// import DatePicker from './components/DatePicker';
-// import { TokenTransfer } from 'utils/sdkDappCore';
-=======
-import { TokenTransfer } from 'utils/sdkDappCore';
->>>>>>> Stashed changes
 
 
 interface Option {
@@ -84,9 +77,12 @@ export const Inheritance = () => {
   }, [])
 
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const handleDateChange = (date: Date) => {
-    setSelectedDate(date);
+  const handleDateChange = (date: Date | null) => {
+    if (date) {
+      setSelectedDate(date);
+    }
   };
+
   const { address, account } = useGetAccountInfo();
   const [inputText, setInputText] = useState('');
   const [amountText, setAmountText] = useState('');
@@ -133,11 +129,9 @@ export const Inheritance = () => {
 
       const r = sendPingTransactionFromAbi({amount: amountText, callbackRoute: ""});
 
-      const tr: Transaction = {
+      const res = await ServerClass.postTransaction({
         from: address, to: inputText, amount: parseInt(amountText)
-      }
-      
-      // // const res = await ServerClass.postTransaction(tr);
+      });
    
       // console.log('Response:', res);
     } catch (error) {
@@ -171,7 +165,9 @@ export const Inheritance = () => {
           UNSAFE_className='input-box-small'
         />
     <ComboBox options={options} onChange={(selectedOption: Option) => setCurrency(selectedOption.label)} />
-    {/* <DatePicker value={selectedDate} onChange={handleDateChange} /> */}
+    <Datepicker selected={selectedDate} onChange={handleDateChange} />
+    </Flex>
+    <div className='container'>
     <div className='btn'>
     <Button
             disabled={false}
@@ -182,7 +178,8 @@ export const Inheritance = () => {
             Sign & Send
           </Button>
     </div>
-    </Flex></>:
+    </div>
+    </>:
     (<Spinner></Spinner>) }</>) :
     (<>
     <table className="table">

@@ -1,28 +1,23 @@
-// import React, { useState } from 'react';
-// import { DatepPicker } from '@types/react-datepicker';
-// import { DatePickerField } from '@react-native-aria/datepicker';
+import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import './spinner.css'
+interface DatepickerProps {
+  selected: Date;
+  onChange: (date: Date | null) => void;
+}
 
-// interface DatepickerProps {
-//   value: Date;
-//   onChange: (date: Date) => void;
-// }
+export const Datepicker: React.FC<DatepickerProps> = ({ selected, onChange }) => {
+  const handleChange = (date: Date | null) => {
+    onChange(date || new Date()); // If null is passed, set the default value to current date
+  };
 
-// export const DatePicker: React.FC<DatepickerProps> = ({ value, onChange }) => {
-//   const [selectedDate, setSelectedDate] = useState(value);
-
-//   const handleChange = (date: Date) => {
-//     setSelectedDate(date);
-//     onChange(date);
-//   };
-
-//   return (
-//     <DatePickerField
-//       label="Select a date"
-//       value={selectedDate}
-//       onChange={handleChange}
-//       isDisabled={false} // You can change this to enable/disable the Datepicker
-//     >
-//       <DatePicker />
-//     </DatePickerField>
-//   );
-// };
+  return (
+    <DatePicker
+    className='pick'
+      selected={selected}
+      onChange={handleChange}
+      dateFormat="yyyy-MM-dd" // You can customize the date format as needed
+    />
+  );
+};

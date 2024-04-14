@@ -13,11 +13,12 @@ const customStyles = {
   input: (provided: any) => ({
     ...provided,
     minHeight: '65px', // Adjust height as needed
-    minWidth: '100px'
+    width: '300px'
   }),
   menu: (provided: any) => ({
     ...provided,
     minHeight: '50px', // Adjust height as needed
+    width: '300px'
   }),
 };
 
