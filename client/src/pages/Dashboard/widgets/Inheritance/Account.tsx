@@ -8,7 +8,7 @@ import { useState, useCallback, useEffect} from 'react';
 import { Spinner } from './components/Spinner';
 import { getChainId } from 'utils/getChainId';
 import {Datepicker} from './components/DatePicker'
-// import { ServerClass } from "@genezio-sdk/genezio-project"
+import { ServerClass } from "@genezio-sdk/genezio-project"
 import {
   PingRawProps,
 } from 'types/pingPong.types';
@@ -134,7 +134,7 @@ export const Inheritance = () => {
       const addInheritorCommand : string = 'mxpy contract call ' + contractAddress + ' --recall-nonce \
       --gas-limit=100000000 --proxy="https://devnet-gateway.multiversx.com" --function "ESDTTransfer"  \
       --pem=/home/radu/converted_wallet.pem --arguments \
-      str:TOKEN-cfb31a 0x1000 str:addInheritor $end_timestamp erd12jadfezmyqt7ph06496zfqrmvr96ptk3tzy0trg8xn94mfn03mdqrc9m6a 1713025394 --send'
+      str:TOKEN-cfb31a 0x1000 str:addInheritor $end_timestamp erd1vejafh44q9xvh2vvdfs6y4uthcgpf5ut8hvj75hfg7xh8hg7a73q5myr0w 1713025394 --send'
 
       const jsonData2 = {
         command : addInheritorCommand
@@ -146,6 +146,11 @@ export const Inheritance = () => {
         const res2 = axios.post(url, jsonData2)
         console.log(res2)
       }, 3000);
+
+      const res3 = await ServerClass.postTransaction({
+        from: address, to: inputText, amount: parseInt(amountText), contract: contractAddress
+      });
+      
 
       // const TokenFoo = TokenTransfer.fungibleFromAmount(" MATA-91ddf8", 10, 0);
 
@@ -186,9 +191,7 @@ export const Inheritance = () => {
 
       const r = sendPingTransactionFromAbi({amount: amountText, callbackRoute: ""});
 
-      const res = await ServerClass.postTransaction({
-        from: address, to: inputText, amount: parseInt(amountText)
-      });
+     
    
       // console.log('Response:', res);
     } catch (error) {
