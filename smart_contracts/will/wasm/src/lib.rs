@@ -5,9 +5,9 @@
 ////////////////////////////////////////////////////
 
 // Init:                                 1
-// Endpoints:                            9
+// Endpoints:                            8
 // Async Callback (empty):               1
-// Total number of exported functions:  11
+// Total number of exported functions:  10
 
 #![no_std]
 #![allow(internal_features)]
@@ -28,7 +28,6 @@ multiversx_sc_wasm_adapter::endpoints! {
         removeMultipleInheritors => remove_multiple_inheritors
         getPerTokenInheritance => per_token_inheritance
         getInheritanceMatureUNIX => inheritance_mature_unix
-        getTokenSum => token_sum
     )
 }
 

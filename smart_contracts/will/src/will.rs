@@ -107,6 +107,10 @@ pub trait WillESDT:
         require!(self.blockchain().get_owner_address() == benefactor, "can't call contract if you are not owner");
         require!(inheritors.len() == tokens.len() && amounts.len() == tokens.len() && tokens.len() == end_timestamps.len(), "the number of amounts, inheritors, tokens and timestamps should be equal");
         
+        for token in &tokens {
+            self.token_sum(&token).clear();
+        }
+
         for (inheritor, (token, (amount, end_timestamp))) in inheritors.iter().zip(tokens.iter().zip(amounts.iter().zip(end_timestamps.iter()))) {
             self.handle_new_inheritor(&inheritor, &token, &amount, &end_timestamp);
         }
@@ -141,7 +145,6 @@ pub trait WillESDT:
     #[storage_mapper("inheritanceMatureUNIX")]
     fn inheritance_mature_unix(&self, inheritor: &ManagedAddress, token: &TokenIdentifier) -> SingleValueMapper<u64>;
 
-    #[view(getTokenSum)]
     #[storage_mapper("token_sum")]
     fn token_sum(&self, token: &TokenIdentifier) -> SingleValueMapper<BigUint>;
 }

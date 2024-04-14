@@ -163,21 +163,6 @@
                     "type": "u64"
                 }
             ]
-        },
-        {
-            "name": "getTokenSum",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "token",
-                    "type": "TokenIdentifier"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "BigUint"
-                }
-            ]
         }
     ],
     "esdtAttributes": [],
