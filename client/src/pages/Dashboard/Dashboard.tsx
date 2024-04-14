@@ -73,7 +73,7 @@ export const Dashboard = () => {
   useScrollToElement();
 
   const { address } = useGetAccountInfo();
-  const widgets = ServerClass.isInheritor(address as string) ? WIDGETS_INHERITOR : WIDGETS;
+  const widgets = WIDGETS;
 
   return (
     <AuthRedirectWrapper>

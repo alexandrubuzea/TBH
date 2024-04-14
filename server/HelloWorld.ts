@@ -33,7 +33,7 @@ export class ServerClass {
 	}
 	
 
-	isInheritor(address: string) : boolean {
+	async isInheritor(address: string) : Promise<boolean> {
 		if (inheritors.has(address))
 			return true;
 

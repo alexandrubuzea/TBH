@@ -6,7 +6,6 @@ import { AbiRegistry, Address, SmartContract } from './sdkDappCore';
 // const abi = AbiRegistry.create(json);
 const willabi = AbiRegistry.create(willjson);
 
-
 export const smartContract = new SmartContract({
   address: new Address(contractAddress),
   abi: willabi,

@@ -5,7 +5,7 @@ import axios, { AxiosResponse } from 'axios';
 import './inheritance.css'
 import { smartContract } from 'utils/smartContract';
 import { Button } from 'components/Button';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect} from 'react';
 import { Spinner } from './components/Spinner';
 import { getChainId } from 'utils/getChainId';
 import { ServerClass, Transaction } from "@genezio-sdk/genezio-project"
@@ -29,6 +29,34 @@ interface RequestBody {
   currency: string
 }
 
+const endpoint = "https://devnet-gateway.multiversx.com/address/erd194jfa28ulagr2nc65kv9emlay78eyhnnvs83qdxnqhvtcqrv49mqy2e45f/esdt"
+
+
+async function getAssets(account : string) {
+  const url = "https://devnet-gateway.multiversx.com/address/" + account + "/esdt"
+  const res = await axios.get(url)
+  console.log(res.data.data.esdts)
+  const jsonParse = JSON.parse(JSON.stringify(res.data.data))
+  return jsonParse.esdts
+}
+
+interface MyToken {
+  name: string;
+  amount: number;
+}
+
+function iterateObjectKeys(obj: { [key: string]: any }) {
+  const keys : MyToken[] = []
+  for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+          keys.push({
+            name: key,
+            amount : obj[key].balance
+          })
+      }
+  }
+  return keys
+}
 
 const PING_TRANSACTION_INFO = {
   processingMessage: 'Processing Ping transaction',
@@ -37,12 +65,18 @@ const PING_TRANSACTION_INFO = {
 };
 
 export const Inheritance = () => {
-  let options = [
-    {id: 1, label: '1'},
-    {id: 2, label: '2'},
-    {id: 3, label: '3'},
-    {id: 4, label: '4'},
-  ];
+  
+  const [options, setOptions] = useState<Option[]>([]);
+
+  useEffect(() => {
+    getAssets(address).then((res) => {
+      const keys = iterateObjectKeys(res)
+
+      keys.map((key, idx) => options.push({id: idx, label: key.name} ))
+    })
+  }, [])
+
+  
 
   const { address, account } = useGetAccountInfo();
 
@@ -56,19 +90,21 @@ export const Inheritance = () => {
 		async ({ amount, callbackRoute }: PingRawProps) => {
 		  // clearAllTransactions();
 	
-		  const pingTransaction = smartContract.methodsExplicit
-      .addInheritor()
-			.withSender(new Address(address))
-			.withValue(amount ?? '0')
-			.withGasLimit(60000000)
-			.withChainID(getChainId())
-			.buildTransaction();
+      
+
+		  // const sendTransaction = smartContract.methodsExplicit
+      // .addInheritor()
+			// .withSender(new Address(address))
+			// .withGasLimit(60000000)
+      // .withSingleESDTTransfer()
+			// .withChainID(getChainId())
+			// .buildTransaction();
 	
-		  const sessionId = await signAndSendTransactions({
-			transactions: [pingTransaction],
-			callbackRoute,
-			transactionsDisplayInfo: PING_TRANSACTION_INFO
-		  });
+		  // const sessionId = await signAndSendTransactions({
+      //   transactions: [sendTransaction],
+      //   callbackRoute,
+      //   transactionsDisplayInfo: PING_TRANSACTION_INFO
+		  // });
 	
 		  // sessionStorage.setItem(type, sessionId);
 		  // setPingPongSessionId(sessionId);
