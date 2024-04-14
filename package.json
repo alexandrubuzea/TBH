@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "@react-stately/datepicker": "^3.9.2",
+    "@react-types/datepicker": "^3.7.2",
+    "child_process": "^1.0.2",
     "genezio": "^1.2.0",
     "global": "^4.4.0"
   }

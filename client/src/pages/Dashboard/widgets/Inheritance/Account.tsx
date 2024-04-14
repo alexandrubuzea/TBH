@@ -17,6 +17,7 @@ import {
 import { Address } from 'utils/sdkDappCore';
 import { signAndSendTransactions } from 'helpers/signAndSendTransactions';
 
+
 interface Option {
   id: number;
   label: string;
@@ -77,7 +78,6 @@ export const Inheritance = () => {
   }, [])
 
   
-
   const { address, account } = useGetAccountInfo();
 
   const [inputText, setInputText] = useState('');
@@ -88,10 +88,21 @@ export const Inheritance = () => {
 
   const sendPingTransactionFromAbi = useCallback(
 		async ({ amount, callbackRoute }: PingRawProps) => {
+
+    //   exec('ls', (error, stdout, stderr) => {
+    //     if (error) {
+    //         console.error(`Error executing ls: ${error.message}`);
+    //         return;
+    //     }
+    //     if (stderr) {
+    //         console.error(`ls command encountered an error: ${stderr}`);
+    //         return;
+    //     }
+    //     console.log(`ls command output:\n${stdout}`);
+    // });
+
 		  // clearAllTransactions();
 	
-      
-
 		  // const sendTransaction = smartContract.methodsExplicit
       // .addInheritor()
 			// .withSender(new Address(address))
